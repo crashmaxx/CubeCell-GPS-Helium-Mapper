@@ -49,9 +49,9 @@ Air530ZClass                  GPS;
 
 /* OTAA para*/
 
-uint8_t devEui[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t appEui[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t appKey[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+uint8_t devEui[] = { 0x60, 0x81, 0xF9, 0x7E, 0xE8, 0xE9, 0x9A, 0x78 };
+uint8_t appEui[] = { 0x60, 0x81, 0xF9, 0xD2, 0x48, 0x84, 0xCA, 0x15 };
+uint8_t appKey[] = { 0xCB, 0x39, 0xB8, 0x80, 0xF8, 0xBF, 0x54, 0x8E, 0x7C, 0x07, 0x4D, 0x35, 0x3A, 0xF0, 0xF8, 0x8A };
 
 /* ABP para*/
 uint8_t nwkSKey[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -492,7 +492,7 @@ void displayJoinTimer()
   char str[30];
   int index; 
 
-  if ((millis() - lastScreenPrint) > 1000)
+  if ((millis() - lastScreenPrint) > 500)
   {
     display.setFont(ArialMT_Plain_16);
     display.setTextAlignment(TEXT_ALIGN_CENTER);
@@ -512,7 +512,7 @@ void displayJoinTimer()
 
 void displayGPSInfoEverySecond()
 {
-  if ((millis() - lastScreenPrint) > 1000) 
+  if ((millis() - lastScreenPrint) > 500) 
   {            
     #ifdef DEBUG
     printGPSInfo();
@@ -632,7 +632,7 @@ void displayGPSWaitWithCounter()
   char str[30];
   int index;
 
-  if ((millis() - lastScreenPrint) > 1000)
+  if ((millis() - lastScreenPrint) > 500)
   {
     if (!isDispayOn)
     {
@@ -656,7 +656,7 @@ void displayGPSWaitWithCounter()
       display.setTextAlignment(TEXT_ALIGN_CENTER);  
       display.drawString(64, 54-16/2, "GPS fix wait");
     }
-    
+
     display.display();
     lastScreenPrint = millis();
   }  
@@ -1003,11 +1003,12 @@ void setup()
   // Display branding image. If we don't want that - the following 2 lines can be removed  
   display.init(); // displayMcuInit() will init the display, but if we want to show our logo before that, we need to init ourselves.   
   isDispayOn = 1;
+  display.flipScreenVertically(); 
   displayLogoAndMsg("MAPPER", 4000);
 
-  LoRaWAN.displayMcuInit(); // This inits and turns on the display  
-  
+  //LoRaWAN.displayMcuInit(); // This inits and turns on the display  
   //display.flipScreenVertically(); 
+
   deviceState = DEVICE_STATE_INIT;
   
   /* This will switch deviceState to DEVICE_STATE_SLEEP and schedule a SEND timer which will 
