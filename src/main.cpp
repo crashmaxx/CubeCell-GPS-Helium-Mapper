@@ -455,7 +455,7 @@ void displayLogoAndMsg(String msg, uint32_t wait_ms)
 {
   display.clear();
   display.drawXbm(0, 0, 128, 42, helium_logo_bmp);
-  displayBatteryLevel();
+  //displayBatteryLevel();
   display.setTextAlignment(TEXT_ALIGN_CENTER);
   display.setFont(ArialMT_Plain_16);
   display.drawString(64, 54-16/2, msg);
