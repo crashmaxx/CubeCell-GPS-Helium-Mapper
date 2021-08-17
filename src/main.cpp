@@ -337,6 +337,7 @@ void displayGPSInfo()
   index = sprintf(str, "sats: %d", (int)GPS.satellites.value());
   str[index] = 0;
   display.drawString(88, 48, str);
+  
   display.display();
 }
 
@@ -461,6 +462,7 @@ void displayLogoAndMsg(String msg, uint32_t wait_ms)
   #ifdef DEBUG
   Serial.println(msg);
   #endif
+  
   display.display();
 
   if (wait_ms)
@@ -502,6 +504,7 @@ void displayJoinTimer()
       str[index] = 0; 
       display.drawString(64, 48, str);
     }    
+    
     display.display();
     lastScreenPrint = millis();    
   }
@@ -1004,6 +1007,7 @@ void setup()
 
   LoRaWAN.displayMcuInit(); // This inits and turns on the display  
   
+  //display.flipScreenVertically(); 
   deviceState = DEVICE_STATE_INIT;
   
   /* This will switch deviceState to DEVICE_STATE_SLEEP and schedule a SEND timer which will 
