@@ -188,15 +188,16 @@ bool      displayBatPct       = false;
 enum eDeviceState_LoraWan stateAfterMenu;
 
 
-#define MENU_CNT 7
+#define MENU_CNT 8
 
-char* menu[MENU_CNT] = {"Screen OFF", "Sleep", "Debug Info", "Faster Upd", "Slower Upd", "Reset GPS", "Bat V/%"};
+char* menu[MENU_CNT] = {"Screen OFF", "Sleep", "Debug Info", "GPS Info", "Faster Upd", "Slower Upd", "Reset GPS", "Bat V/%"};
 
 enum eMenuEntries
 {
   SCREEN_OFF,
   SLEEP,
   DEBUG_INFO,
+  GPS_INFO,
   FASTER_UPD,
   SLOWER_UPD,
   RESET_GPS,
@@ -590,7 +591,7 @@ void displayDebugInfo()
   display.drawString(0, 30, str);    
   display.display();
 
-  delay(4000);    
+  delay(10000);    
 }
 
 void startGPS()
@@ -884,11 +885,23 @@ void executeMenu(void)
       menuMode = false;
       break;
 
+    case GPS_INFO:
+      displayGPSInfo();
+      delay(10000);
+      deviceState = stateAfterMenu;
+      menuMode = false;
+      break;
+
     case FASTER_UPD:
       if (movingUpdateRate > 1000)
       {
         movingUpdateRate -= 1000;
       }
+      else if (movingUpdateRate > 200)
+      {
+        movingUpdateRate -= 100;
+      }
+      
       deviceState = DEVICE_STATE_CYCLE;  
       stoppedCycle = 0;
       menuMode = false;
@@ -897,7 +910,14 @@ void executeMenu(void)
     case SLOWER_UPD:
       if (movingUpdateRate < STOPPED_UPDATE_RATE)
       {
-        movingUpdateRate += 1000;
+        if (movingUpdateRate > 1000)
+        {
+          movingUpdateRate += 1000;
+        }
+        else if (movingUpdateRate > 200)
+        {
+          movingUpdateRate += 100;
+        }
       }
       deviceState = DEVICE_STATE_CYCLE;  
       stoppedCycle = 0;
@@ -1007,6 +1027,7 @@ void setup()
   displayLogoAndMsg("MAPPER", 4000);
 
   //LoRaWAN.displayMcuInit(); // This inits and turns on the display  
+  //display.flipScreenVertically(); 
 
   deviceState = DEVICE_STATE_INIT;
   
