@@ -1007,7 +1007,6 @@ void setup()
   displayLogoAndMsg("MAPPER", 4000);
 
   //LoRaWAN.displayMcuInit(); // This inits and turns on the display  
-  //display.flipScreenVertically(); 
 
   deviceState = DEVICE_STATE_INIT;
   
