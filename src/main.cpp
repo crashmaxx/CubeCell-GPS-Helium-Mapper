@@ -3,11 +3,11 @@
  */
 #include "LoRaWan_APP.h"
 #include "Arduino.h"
-#include "GPS_Air530.h" // Enable this for board version 1.0 and 1.0_1
-//#include "GPS_Air530Z.h" // Enable this for board version 1.1
+//#include "GPS_Air530.h" // Enable this for board version 1.0 and 1.0_1
+#include "GPS_Air530Z.h" // Enable this for board version 1.1
 #include "HT_SSD1306Wire.h"
 
-//#define DEBUG // Enable/Disable debug output over the serial console
+#define DEBUG // Enable/Disable debug output over the serial console
 
 extern SSD1306Wire            display;    // Defined in LoRaWan_APP.cpp
 extern uint8_t                isDispayOn; // Defined in LoRaWan_APP.cpp
@@ -23,7 +23,7 @@ Air530ZClass                  GPS;
 // Comment out/uncomment this line to disable/enable the functionality  where the vibration sensor wakes the device from "deep" sleep (VIBR_SENSOR must be enabled)
 //#define VIBR_WAKE_FROM_SLEEP  
 
-#define MOVING_UPDATE_RATE    5000      // Update rate when moving
+#define MOVING_UPDATE_RATE    100      // Update rate when moving
 #define STOPPED_UPDATE_RATE   60000     // Update rate when stopped
 #define SLEEPING_UPDATE_RATE  21600000  // Update every 6hrs when sleeping
 #define MAX_GPS_WAIT          660000    // Max time to wait for GPS before going to sleep
